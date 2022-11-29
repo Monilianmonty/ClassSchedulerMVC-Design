@@ -79,12 +79,13 @@ public class LogInPageInterface implements ActionListener,Serializable{
 
 
 
-
+        //must put your own
         try(FileInputStream loginf = new FileInputStream("C:\\Users\\moomo\\IdeaProjects\\Sweng311FinalProject\\src\\StudentData.txt");
             ObjectInputStream o = new ObjectInputStream(loginf);
         ) {
             Scanner read = new Scanner(loginf);
             read.useDelimiter("\\n|,");
+            boolean login = false;
             while (loginf.available() > 0) {
                 Student s1 = (Student) o.readObject();
                 String em = s1.getEmail();
@@ -92,21 +93,27 @@ public class LogInPageInterface implements ActionListener,Serializable{
 
                 //if username and password in text box matches username and password in textfile show class page
                 if (Username.equals(em) && password.equals(pass)) {
+                    login = true;
+                    break;
+
+                }
+            }
+            if(login){
                     JOptionPane.showMessageDialog(null, "LogIn Succesful");
                     ClassPageInterface c1 = new ClassPageInterface();
                     c1.setVisible(true);
                     c1.pack();
                     c1.setLocationRelativeTo(null);
                     c1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-                } else {
+                }
+                else {
 
                     JOptionPane.showMessageDialog(null, "Username or Password mismatch");
                 }
+
                 o.close();
                 loginf.close();
-            }
+
         } catch (FileNotFoundException exception) {
             throw new RuntimeException(exception);
         } catch (IOException exception) {
