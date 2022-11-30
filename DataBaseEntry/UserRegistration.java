@@ -18,13 +18,13 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
 
 
 
+public static void main(String[] args) {
 
+    //drawEve();
+}
 
-
-
-
-    public static void main (String[] args) {
-
+    //public static void main (String[] args) {
+    public static void drawEve() {
         p1 = new JPanel();
         p1.setLayout(null);
         p1.setVisible(true);
