@@ -18,10 +18,10 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
 
 
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    //drawEve();
-}
+        //drawEve();
+    }
 
     //public static void main (String[] args) {
     public static void drawEve() {
@@ -135,8 +135,7 @@ public static void main(String[] args) {
 
         //first see if the current stored users have any attributes already taken
         try(FileInputStream userf = new FileInputStream("StudentData.txt");
-            ObjectInputStream of = new ObjectInputStream(userf);
-        ) {
+            ObjectInputStream of = new ObjectInputStream(userf)) {
             Scanner readf = new Scanner(userf);
             readf.useDelimiter("\\n|,");
 
