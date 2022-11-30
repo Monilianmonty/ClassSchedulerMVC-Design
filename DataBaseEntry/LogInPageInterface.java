@@ -16,7 +16,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
     private static JButton button, registerUser;
     private static JPasswordField Password;
 
-
+    //public UserRegistration userRegistration;
 
 
 
@@ -87,14 +87,14 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
     public void actionPerformed(ActionEvent e) {
 
         boolean regcheck = false;
-
+        UserRegistration user = new UserRegistration();
         //if the user wants to register
         if(e.getSource() == registerUser){
             regcheck = true;
-            UserRegistration user = new UserRegistration();
-            user.setSize(800,400);
-            user.setVisible(true);
-            user.setLocationRelativeTo(null);
+
+            UserRegistration.drawEve();
+
+
         }
 
 
@@ -105,11 +105,10 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
         String password = String.valueOf(Password.getPassword());
 
 
-
         //opening text file and checking students email and password
         try(FileInputStream loginf = new FileInputStream("StudentData.txt");
-            ObjectInputStream o = new ObjectInputStream(loginf);
-        ) {
+            ObjectInputStream o = new ObjectInputStream(loginf)) {
+            System.out.println("Here");
             Scanner read = new Scanner(loginf);
             read.useDelimiter("\\n|,");
             boolean login = false;
@@ -128,11 +127,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
             //if you were able to log in show the classpageinterface
             if(login){
                     JOptionPane.showMessageDialog(null, "LogIn Succesful");
-                    ClassPageInterface c1 = new ClassPageInterface();
-                    c1.setLocationRelativeTo(null);
-                    c1.setVisible(true);
-                    c1.setBounds(400,150,1280,720);
-                    c1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    ClassPageInterface.drawClass();
                 }
             //if username and password do not match and the user did not register
                 else if(login == false && regcheck == false){
@@ -146,6 +141,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
         } catch (FileNotFoundException exception) {
             throw new RuntimeException(exception);
         } catch (IOException exception) {
+            //System.out.println("Here");
             throw new RuntimeException(exception);
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
