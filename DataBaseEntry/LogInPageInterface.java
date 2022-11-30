@@ -1,19 +1,21 @@
 
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Scanner;
 
-import static java.lang.System.in;
 
 
-public class LogInPageInterface implements ActionListener,Serializable{
+
+public class LogInPageInterface extends JFrame implements ActionListener,Serializable{
     private static JLabel password1, label;
     private static JTextField username;
-    private static JButton button;
+    private static JButton button, registerUser;
     private static JPasswordField Password;
+
 
 
 
@@ -36,7 +38,7 @@ public class LogInPageInterface implements ActionListener,Serializable{
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             //username label
-            label = new JLabel("Username");
+            label = new JLabel("Email");
             label.setBounds(100,8,70,20);
             panel.add(label);
 
@@ -57,21 +59,46 @@ public class LogInPageInterface implements ActionListener,Serializable{
 
 
 
-        //adding button
+        //adding button for log in
         button = new JButton("LogIn");
-        button.setBounds(100,110,90,25);
+        button.setBounds(100,110,70,25);
         button.setForeground(Color.WHITE);
         button.setBackground(Color.BLACK);
-        button.setFont(new Font("Arial", Font.BOLD, 12));
-        button.addActionListener((ActionListener) new LogInPageInterface());
+        button.setFont(new Font("Arial", Font.BOLD, 10));
+        button.addActionListener(new LogInPageInterface());
         panel.add(button);
 
+        //add button for register
+        registerUser = new JButton("Register");
+        registerUser.setBounds(200,110,90,25);
+        registerUser.setForeground(Color.WHITE);
+        registerUser.setBackground(Color.BLACK);
+        registerUser.setFont(new Font("Arial", Font.BOLD, 10));
+        registerUser.addActionListener(new LogInPageInterface());
+        panel.add(registerUser);
 
 
         }
 
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        boolean regcheck = false;
+
+        //if the user wants to register
+        if(e.getSource() == registerUser){
+            regcheck = true;
+            UserRegistration user = new UserRegistration();
+            user.setSize(800,400);
+            user.setVisible(true);
+            user.setLocationRelativeTo(null);
+        }
+
+
+
 
         //UserName and password typed into the login page
         String Username = username.getText();
@@ -79,8 +106,8 @@ public class LogInPageInterface implements ActionListener,Serializable{
 
 
 
-        //must put your own
-        try(FileInputStream loginf = new FileInputStream("C:\\Users\\moomo\\IdeaProjects\\Sweng311FinalProject\\src\\StudentData.txt");
+        //opening text file and checking students email and password
+        try(FileInputStream loginf = new FileInputStream("StudentData.txt");
             ObjectInputStream o = new ObjectInputStream(loginf);
         ) {
             Scanner read = new Scanner(loginf);
@@ -98,21 +125,23 @@ public class LogInPageInterface implements ActionListener,Serializable{
 
                 }
             }
+            //if you were able to log in show the classpageinterface
             if(login){
                     JOptionPane.showMessageDialog(null, "LogIn Succesful");
                     ClassPageInterface c1 = new ClassPageInterface();
-                    c1.setVisible(true);
-                    c1.pack();
                     c1.setLocationRelativeTo(null);
+                    c1.setVisible(true);
+                    c1.setBounds(400,150,1280,720);
                     c1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
-                else {
+            //if username and password do not match and the user did not register
+                else if(login == false && regcheck == false){
 
                     JOptionPane.showMessageDialog(null, "Username or Password mismatch");
                 }
 
                 o.close();
-                loginf.close();
+                //loginf.close();
 
         } catch (FileNotFoundException exception) {
             throw new RuntimeException(exception);
