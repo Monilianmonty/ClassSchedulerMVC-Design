@@ -147,17 +147,36 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
                 String UID = sf.getId();
                 //if the user has entered an email,id, or password that is already taken then error message occurs
                 if (e.getSource() == submit) {
-                    if (newEmail.equals(Uem)) {
+                    if(newEmail.equals("")){
+                        JOptionPane.showMessageDialog(null, "Please enter email");
+                        takenStudent = false;
+                    }
+                    else if(newName.equals("")){
+                        JOptionPane.showMessageDialog(null, "Please enter name");
+                        takenStudent = false;
+                    }
+                    else if(newID.equals("")){
+                        JOptionPane.showMessageDialog(null, "Please enter ID");
+                        takenStudent = false;
+                    }
+                    else if(newPassword.equals("")){
+                        JOptionPane.showMessageDialog(null, "Please enter password");
+                        takenStudent = false;
+                    }
+                    else if (newEmail.equals(Uem)) {
                         JOptionPane.showMessageDialog(null, "Email already taken");
-                        takenStudent = true;
+                        takenStudent = false;
                     } else if (newID.equals(UID)) {
                         JOptionPane.showMessageDialog(null, "ID already taken");
-                        takenStudent = true;
+                        takenStudent = false;
                     } else if (newPassword.equals(Upass)) {
                         JOptionPane.showMessageDialog(null, "Password already taken");
-                        takenStudent = true;
+                        takenStudent = false;
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Registration Complete!");
+                        takenStudent = true;
+
                     }
                 }
             }
@@ -171,7 +190,7 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
         }
 
         //if the students credentials are not taken then write the information to the text file
-        if(takenStudent == false) {
+        if(takenStudent) {
             try {
                 FileOutputStream userOut = new FileOutputStream("StudentData.txt");
                 ObjectOutputStream userOb = new ObjectOutputStream(userOut);
