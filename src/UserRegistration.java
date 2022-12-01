@@ -195,6 +195,7 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
                     } else {
                         JOptionPane.showMessageDialog(null, "Registration Complete!");
                         takenStudent = true;
+                        regFrame.setVisible(false);
 
                     }
                 }
