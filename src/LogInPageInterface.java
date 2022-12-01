@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class LogInPageInterface extends JFrame implements ActionListener,Serializable{
     private static JLabel password1, label;
     private static JTextField username;
-    private static JButton button, registerUser;
+    private static JButton button, registerUser, adminlogin;
     private static JPasswordField Password;
 
     //public UserRegistration userRegistration;
@@ -31,7 +31,6 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
             //jframe class
             JFrame frame = new JFrame();
             frame.setTitle("LOGIN PAGE");
-            frame.setVisible(true);
             frame.setLocation(new Point(300,300));
             frame.add(panel);
             frame.setSize(new Dimension(400, 200));
@@ -77,7 +76,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
         registerUser.addActionListener(new LogInPageInterface());
         panel.add(registerUser);
 
-
+        frame.setVisible(true);
         }
 
 
@@ -100,6 +99,8 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
 
 
 
+
+
         //UserName and password typed into the login page
         String Username = username.getText();
         String password = String.valueOf(Password.getPassword());
@@ -108,7 +109,6 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
         //opening text file and checking students email and password
         try(FileInputStream loginf = new FileInputStream("StudentData.txt");
             ObjectInputStream o = new ObjectInputStream(loginf)) {
-            System.out.println("Here");
             Scanner read = new Scanner(loginf);
             read.useDelimiter("\\n|,");
             boolean login = false;
