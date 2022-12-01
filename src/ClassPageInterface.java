@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Array;
 
 public class ClassPageInterface extends JFrame{
     //serves as an incrementer for the position of a course
@@ -23,10 +24,6 @@ public class ClassPageInterface extends JFrame{
         i = i+20;
     }
 
-    public static void main(String[] args) {
-
-    }
-
     public static void drawClass() {
         ClassPageInterface cpi = new ClassPageInterface();
         JFrame window = new JFrame("Class Selection Screen");
@@ -34,26 +31,28 @@ public class ClassPageInterface extends JFrame{
         SpringLayout layout = new SpringLayout();
         contentPane.setLayout(layout);
 
-        //select class label
-        JLabel selectClass = new JLabel("Select a class to add: ");
-        contentPane.add(selectClass);
-        layout.putConstraint(SpringLayout.WEST, selectClass, 5, SpringLayout.WEST, contentPane);
+        //JLabel for adding classes
+        JLabel addClass = new JLabel("Select a class to add: ");
+        contentPane.add(addClass);
+        layout.putConstraint(SpringLayout.WEST, addClass, 5, SpringLayout.WEST, contentPane);
 
-        //JComboBox for adding classes
-        JComboBox addClassOptions = new JComboBox();
         //temporary classes (courses) for now
-        addClassOptions.addItem("SWENG311");
-        addClassOptions.addItem("CMPSC360");
-        addClassOptions.addItem("CMPSC121");
+        Class class1 = new Class("SWENG311", "Object Oriented Programming", "10:00", "11:00");
+        Class class2 = new Class("CMPSC360", "Discrete Mathematics", "11:00", "12:00");
+        Class class3 = new Class("CMPSC121", "Intermediate Programming", "12:00", "13:00");
+        Class class4 = new Class("CMPSC200", "Matlab", "12:00", "13:00");
+        Class[] classes = new Class[]{class1,class2,class3,class4};
+        //JComboBox for adding classes
+        JComboBox addClassOptions = new JComboBox(classes);
         contentPane.add(addClassOptions);
         layout.putConstraint(SpringLayout.WEST, addClassOptions, 5, SpringLayout.WEST, contentPane);
-        layout.putConstraint(SpringLayout.NORTH, addClassOptions, 20, SpringLayout.NORTH, selectClass);
+        layout.putConstraint(SpringLayout.NORTH, addClassOptions, 20, SpringLayout.NORTH, addClass);
 
         //JButton to add classes
         JButton addButton = new JButton("Add Class");
         contentPane.add(addButton);
         layout.putConstraint(SpringLayout.WEST, addButton, 110, SpringLayout.WEST, addClassOptions);
-        layout.putConstraint(SpringLayout.NORTH, addButton, 20, SpringLayout.NORTH, selectClass);
+        layout.putConstraint(SpringLayout.NORTH, addButton, 20, SpringLayout.NORTH, addClass);
 
         //selected classes label
         JLabel selectedClasses = new JLabel("Current schedule: ");
@@ -61,38 +60,74 @@ public class ClassPageInterface extends JFrame{
         layout.putConstraint(SpringLayout.WEST, selectedClasses, 5, SpringLayout.WEST, contentPane);
         layout.putConstraint(SpringLayout.NORTH, selectedClasses, 25, SpringLayout.SOUTH, addClassOptions);
 
+        //makes table for selected classes
+        String[] columnNames = {"Start Time", "End Time", "Class Code", "Class Title"};
+        Object[][] data = new Object[13][4];
+        for (int i = 0; i < 13; i++) {
+            data[i][0] = (i+8)+":00";
+        }
+        JTable selectedClassesTable = new JTable(data, columnNames);
+        contentPane.add(selectedClassesTable);
+        layout.putConstraint(SpringLayout.WEST, selectedClassesTable, 5, SpringLayout.WEST, contentPane);
+        layout.putConstraint(SpringLayout.NORTH, selectedClassesTable, 20, SpringLayout.NORTH, selectedClasses);
+
         //JLabel for remove classes section
-        JLabel removeClasses = new JLabel("Select classes to remove: ");
-        contentPane.add(removeClasses);
-        layout.putConstraint(SpringLayout.WEST,removeClasses, 5,SpringLayout.WEST, contentPane);
-        layout.putConstraint(SpringLayout.NORTH, removeClasses, 200, SpringLayout.NORTH, selectedClasses);
+        JLabel removeClass = new JLabel("Select classes to remove: ");
+        contentPane.add(removeClass);
+        layout.putConstraint(SpringLayout.WEST, removeClass, 5,SpringLayout.WEST, contentPane);
+        layout.putConstraint(SpringLayout.SOUTH, removeClass, 40, SpringLayout.SOUTH, selectedClassesTable);
 
         //JComboBox for remove classes section
         JComboBox removeClassOptions = new JComboBox();
         contentPane.add(removeClassOptions);
         layout.putConstraint(SpringLayout.WEST, removeClassOptions, 5, SpringLayout.WEST, contentPane);
-        layout.putConstraint(SpringLayout.NORTH, removeClassOptions, 20, SpringLayout.NORTH, removeClasses);
+        layout.putConstraint(SpringLayout.NORTH, removeClassOptions, 20, SpringLayout.NORTH, removeClass);
 
         //JButton for remove classes section
         JButton removeButton = new JButton("Remove Class");
         contentPane.add(removeButton);
+        layout.putConstraint(SpringLayout.WEST, removeButton, 110, SpringLayout.WEST, removeClassOptions);
+        layout.putConstraint(SpringLayout.NORTH, removeButton, 20, SpringLayout.NORTH, removeClass);
 
         //allows "Add Class" button to do stuff
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //remove course visibility from dropdown
-                JLabel newCourse = new JLabel((String) addClassOptions.getSelectedItem());
-                contentPane.add(newCourse);
-                layout.putConstraint(SpringLayout.WEST, newCourse, 5, SpringLayout.WEST, contentPane);
-                layout.putConstraint(SpringLayout.NORTH, newCourse, cpi.geti(), SpringLayout.NORTH, selectedClasses);
                 if (addClassOptions.getSelectedIndex() == -1) {
                     cpi.dispJOP("You can't add any more classes!");
                 }
                 else {
-                    removeClassOptions.addItem(addClassOptions.getSelectedItem());
-                    addClassOptions.removeItemAt(addClassOptions.getSelectedIndex());
+                    Class pickedClass = (Class) addClassOptions.getSelectedItem();
+                    for (int i = 0; i < 13; i++) {
+                        if (data[i][0].equals(pickedClass.getStart()) && data[i][1] == null) {
+                            selectedClassesTable.setValueAt(pickedClass.getEnd(), i, 1);
+                            selectedClassesTable.setValueAt(pickedClass.getName(), i, 2);
+                            selectedClassesTable.setValueAt(pickedClass.getTitle(), i, 3);
+                            removeClassOptions.addItem(pickedClass);
+                            addClassOptions.removeItemAt(addClassOptions.getSelectedIndex());
+                        }
+                        else if (data[i][1] != null && data[i][0].equals(pickedClass.getStart())){
+                            cpi.dispJOP("That time slot is reserved for another class. Remove the class in this slot to add your current selected one.");
+                        }
+                    }
                 }
                 cpi.incrementi();
+            }
+        });
+        //allows "Remove Class" button to do stuff
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //adds course back to the "Add Class" dropdown
+                Class pickedClass = (Class) removeClassOptions.getSelectedItem();
+                for (int i = 0; i < 13; i++) {
+                    if (data[i][0].equals(pickedClass.getStart())) {
+                        selectedClassesTable.setValueAt(null, i, 1);
+                        selectedClassesTable.setValueAt(null, i, 2);
+                        selectedClassesTable.setValueAt(null,i,3);
+                        addClassOptions.addItem(removeClassOptions.getSelectedItem());
+                        removeClassOptions.removeItemAt(removeClassOptions.getSelectedIndex());
+                    }
+                }
             }
         });
 
