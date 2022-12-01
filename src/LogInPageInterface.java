@@ -20,9 +20,11 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
 
     //public UserRegistration userRegistration;
 
-    
-
     public static void main(String[] args) {
+        drawLog();
+    }
+
+    public static void drawLog() {
 
             //jpanel class
             JPanel panel = new JPanel();
@@ -92,6 +94,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
         //if the user wants to register
         if(e.getSource() == registerUser){
             regcheck = true;
+            frame.setVisible(false);
 
             UserRegistration.drawEve();
 
