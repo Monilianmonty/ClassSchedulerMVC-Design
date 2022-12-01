@@ -38,10 +38,14 @@ public class ClassPageInterface extends JFrame{
         layout.putConstraint(SpringLayout.WEST, addClass, 5, SpringLayout.WEST, contentPane);
 
         //temporary classes (courses) for now
-        Class class1 = new Class("SWENG311", "Object Oriented Programming", "10:00", "11:00");
-        Class class2 = new Class("CMPSC360", "Discrete Mathematics", "11:00", "12:00");
-        Class class3 = new Class("CMPSC121", "Intermediate Programming", "12:00", "13:00");
-        Class class4 = new Class("CMPSC200", "Matlab", "12:00", "13:00");
+        boolean[] MW = {true, false, true, false, false};
+        boolean[] MWF = {true, false, true, false, true};
+
+
+        Class class1 = new Class("SWENG311", "Object Oriented Programming", "10:00", "11:00", MW);
+        Class class2 = new Class("CMPSC360", "Discrete Mathematics", "11:00", "12:00", MWF);
+        Class class3 = new Class("CMPSC121", "Intermediate Programming", "12:00", "13:00", MWF);
+        Class class4 = new Class("CMPSC200", "Matlab", "12:00", "13:00", MWF);
         Class[] classes = new Class[]{class1,class2,class3,class4};
         //JComboBox for adding classes
         JComboBox addClassOptions = new JComboBox(classes);
@@ -62,8 +66,8 @@ public class ClassPageInterface extends JFrame{
         layout.putConstraint(SpringLayout.NORTH, selectedClasses, 25, SpringLayout.SOUTH, addClassOptions);
 
         //makes table for selected classes
-        String[] columnNames = {"Start Time", "End Time", "Class Code", "Class Title"};
-        Object[][] data = new Object[14][4];
+        String[] columnNames = {"Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        Object[][] data = new Object[14][6];
         for(int i = 0; i < 4; i++) {
             data[0][i] = columnNames[i];
         }
