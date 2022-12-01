@@ -16,9 +16,11 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
     private static JButton button, registerUser, adminlogin;
     private static JPasswordField Password;
 
+    private static JFrame frame;
+
     //public UserRegistration userRegistration;
 
-
+    
 
     public static void main(String[] args) {
 
@@ -29,7 +31,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
 
 
             //jframe class
-            JFrame frame = new JFrame();
+            frame = new JFrame();
             frame.setTitle("LOGIN PAGE");
             frame.setLocation(new Point(300,300));
             frame.add(panel);
@@ -127,6 +129,7 @@ public class LogInPageInterface extends JFrame implements ActionListener,Seriali
             //if you were able to log in show the classpageinterface
             if(login){
                     JOptionPane.showMessageDialog(null, "LogIn Succesful");
+                    frame.setVisible(false);
                     ClassPageInterface.drawClass();
                 }
             //if username and password do not match and the user did not register
