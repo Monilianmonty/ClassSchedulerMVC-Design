@@ -4,12 +4,14 @@ public class Class implements Serializable{
     String title;
     String start;
     String end;
+    boolean[] days = new boolean[5];
 
-    public Class(String n, String t, String s, String e) {
+    public Class(String n, String t, String s, String e, boolean[] d) {
         name = n;
         title = t;
         start = s;
         end = e;
+        days = d;
     }
     public String getName() {
         return name;
