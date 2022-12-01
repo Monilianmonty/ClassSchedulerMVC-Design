@@ -150,7 +150,8 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Please enter valid email address!");
-                        System.exit(0);
+                        takenStudent = true;
+                        break;
 
                     }
                 }
@@ -163,51 +164,53 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
 
             //read the objects available in the database
 
-            while (userf.available() > 0) {
-                Student sf = (Student) of.readObject();
-                String Uem = sf.getEmail();
-                String Upass = sf.getPassword();
-                String UID = sf.getId();
-                //if the user has entered an email,id, or password that is already taken then error message occurs
-                if (e.getSource() == submit) {
-                    if (newEmail.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please enter email");
-                        takenStudent = false;
-                    } else if (newName.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please enter name");
-                        takenStudent = false;
-                    } else if (newID.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please enter ID");
-                        takenStudent = false;
-                    } else if (newPassword.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please enter password");
-                        takenStudent = false;
-                    } else if (newEmail.equals(Uem)) {
-                        JOptionPane.showMessageDialog(null, "Email already taken");
-                        takenStudent = false;
-                    } else if (newID.equals(UID)) {
-                        JOptionPane.showMessageDialog(null, "ID already taken");
-                        takenStudent = false;
-                    } else if (newPassword.equals(Upass)) {
-                        JOptionPane.showMessageDialog(null, "Password already taken");
-                        takenStudent = false;
+                while (userf.available() > 0) {
+                    Student sf = (Student) of.readObject();
+                    String Uem = sf.getEmail();
+                    String Upass = sf.getPassword();
+                    String UID = sf.getId();
+                    //if the user has entered an email,id, or password that is already taken then error message occurs
+                    if (e.getSource() == submit) {
+                        if (newEmail.equals("")) {
+                            JOptionPane.showMessageDialog(null, "Please enter email");
+                            takenStudent = false;
+                        } else if (newName.equals("")) {
+                            JOptionPane.showMessageDialog(null, "Please enter name");
+                            takenStudent = false;
+                        } else if (newID.equals("")) {
+                            JOptionPane.showMessageDialog(null, "Please enter ID");
+                            takenStudent = false;
+                        } else if (newPassword.equals("")) {
+                            JOptionPane.showMessageDialog(null, "Please enter password");
+                            takenStudent = false;
+                        } else if (newEmail.equals(Uem)) {
+                            JOptionPane.showMessageDialog(null, "Email already taken");
+                            takenStudent = false;
+                        } else if (newID.equals(UID)) {
+                            JOptionPane.showMessageDialog(null, "ID already taken");
+                            takenStudent = false;
+                        } else if (newPassword.equals(Upass)) {
+                            JOptionPane.showMessageDialog(null, "Password already taken");
+                            takenStudent = false;
 
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Registration Complete!");
-                        takenStudent = true;
-                        regFrame.setVisible(false);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Registration Complete!");
+                            takenStudent = true;
+                            regFrame.setVisible(false);
+                            LogInPageInterface.drawLog();
 
+                        }
                     }
                 }
+
+            } catch(FileNotFoundException ex){
+                throw new RuntimeException(ex);
+            } catch(IOException ex){
+                throw new RuntimeException(ex);
+            } catch(ClassNotFoundException ex){
+                throw new RuntimeException(ex);
             }
 
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
 
 
         //if the students credentials are not taken then write the information to the text file
