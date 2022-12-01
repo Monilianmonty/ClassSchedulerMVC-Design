@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,19 +63,25 @@ public class ClassPageInterface extends JFrame{
 
         //makes table for selected classes
         String[] columnNames = {"Start Time", "End Time", "Class Code", "Class Title"};
-        Object[][] data = new Object[13][4];
-        for (int i = 0; i < 13; i++) {
-            data[i][0] = (i+8)+":00";
+        Object[][] data = new Object[14][4];
+        for(int i = 0; i < 4; i++) {
+            data[0][i] = columnNames[i];
         }
-        JTable selectedClassesTable = new JTable(data, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+        for (int i = 0; i < 13; i++) {
+            data[i+1][0] = (i+8)+":00";
+        }
+        JTable selectedClassesTable = new JTable(data, columnNames);
         contentPane.add(selectedClassesTable);
         layout.putConstraint(SpringLayout.WEST, selectedClassesTable, 5, SpringLayout.WEST, contentPane);
         layout.putConstraint(SpringLayout.NORTH, selectedClassesTable, 20, SpringLayout.NORTH, selectedClasses);
+        selectedClassesTable.setCellSelectionEnabled(false);
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        selectedClassesTable.setModel(tableModel);
 
         //JLabel for remove classes section
         JLabel removeClass = new JLabel("Select classes to remove: ");
@@ -91,7 +98,7 @@ public class ClassPageInterface extends JFrame{
         //JButton for remove classes section
         JButton removeButton = new JButton("Remove Class");
         contentPane.add(removeButton);
-        layout.putConstraint(SpringLayout.WEST, removeButton, 110, SpringLayout.WEST, removeClassOptions);
+        layout.putConstraint(SpringLayout.WEST, removeButton, 5, SpringLayout.EAST, removeClassOptions);
         layout.putConstraint(SpringLayout.NORTH, removeButton, 20, SpringLayout.NORTH, removeClass);
 
         //allows "Add Class" button to do stuff
@@ -135,6 +142,21 @@ public class ClassPageInterface extends JFrame{
                 }
             }
         });
+
+        //log out button
+        JButton logout = new JButton("Log Out");
+        contentPane.add(logout);
+        layout.putConstraint(SpringLayout.SOUTH, logout,-5, SpringLayout.SOUTH, contentPane);
+        layout.putConstraint(SpringLayout.EAST, logout, -5, SpringLayout.EAST, contentPane);
+        logout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                //window.dispose();
+                window.dispose();
+                LogInPageInterface.drawLog();
+
+            }
+        });
+
         window.setVisible(true);
         window.setBounds(400,150,1280,720);
     }
