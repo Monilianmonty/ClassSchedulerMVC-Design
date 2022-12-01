@@ -66,7 +66,12 @@ public class ClassPageInterface extends JFrame{
         for (int i = 0; i < 13; i++) {
             data[i][0] = (i+8)+":00";
         }
-        JTable selectedClassesTable = new JTable(data, columnNames);
+        JTable selectedClassesTable = new JTable(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         contentPane.add(selectedClassesTable);
         layout.putConstraint(SpringLayout.WEST, selectedClassesTable, 5, SpringLayout.WEST, contentPane);
         layout.putConstraint(SpringLayout.NORTH, selectedClassesTable, 20, SpringLayout.NORTH, selectedClasses);
@@ -130,9 +135,6 @@ public class ClassPageInterface extends JFrame{
                 }
             }
         });
-
-        //need to make a "Remove Class" button and give it functionality
-
         window.setVisible(true);
         window.setBounds(400,150,1280,720);
     }
