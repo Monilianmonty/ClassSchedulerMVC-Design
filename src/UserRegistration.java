@@ -13,7 +13,7 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
     private static JTextField tid,tname,temail;
 
     private static JPasswordField tpassword;
-    private static JButton submit, reset;
+    private static JButton submit, reset, login;
     private static JFrame regFrame;
 
 
@@ -106,6 +106,14 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
         reset.addActionListener(new UserRegistration());
         p1.add(reset);
 
+        login = new JButton("Log In page");
+        login.setBounds(200, 300, 70, 25);
+        login.setForeground(Color.WHITE);
+        login.setBackground(Color.BLACK);
+        login.setFont(new Font("Times New Roman", Font.BOLD, 10));
+        login.addActionListener(new UserRegistration());
+        p1.add(login);
+
         regFrame.setVisible(true);
 
     }
@@ -124,6 +132,14 @@ public class UserRegistration extends JFrame implements ActionListener,Serializa
         String newEmail = temail.getText();
         String newPassword = String.valueOf(tpassword.getPassword());
         boolean takenStudent = false;
+
+        if(e.getSource() == login){
+            regFrame.setVisible(false);
+            LogInPageInterface.drawLog();
+
+        }
+
+
 
         //reset the text boxes
         if(e.getSource() == reset){
