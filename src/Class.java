@@ -1,17 +1,23 @@
+
+
 import java.io.*;
+
 public class Class implements Serializable{
     String name;
     String title;
-    String start;
-    String end;
-    boolean[] days = new boolean[5];
+    int start;
+    int end;
+    boolean[] days;
 
-    public Class(String n, String t, String s, String e, boolean[] d) {
+    public Class(String n, String t, int s, int e, boolean[] d) {
         name = n;
         title = t;
         start = s;
         end = e;
         days = d;
+    }
+    public int getStart() {
+        return start;
     }
     public String getName() {
         return name;
@@ -19,14 +25,17 @@ public class Class implements Serializable{
     public String getTitle() {
         return title;
     }
-    public String getStart() {
-        return start;
-    }
-    public String getEnd() {
+    public int getEnd() {
         return end;
+    }
+    public boolean[] getDays() {
+        return days;
     }
     @Override
     public String toString() {
-        return name;
+        return name+" ("+start+":00 - "+end+":00)";
+    }
+    public String intToTimeSlot(int startTime, int endTime) {
+        return startTime+":00 - "+endTime+":00";
     }
 }
