@@ -207,5 +207,6 @@ public class controller {
 
     public void logOut() {
         Cview.classFrame.dispose();
+        Lview.getLoginFrame().setVisible(true);
     }
 }
