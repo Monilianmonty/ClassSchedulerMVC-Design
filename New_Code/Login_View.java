@@ -15,38 +15,42 @@ public class Login_View extends JPanel{
 	
 	public Login_View() {
 			
-			this.setLayout(null);
-			this.setVisible(true);
-			
-			loginFrame = new JFrame("Log In: ");
-			loginFrame.setLocation(new Point(300, 300));
-			loginFrame.setSize(new Dimension(400, 200));
-			loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			loginFrame.add(this);
-			
-			login_userLabel = new JLabel("Email:");
-			login_userLabel.setBounds(100, 8, 70, 20);
-			this.add(login_userLabel);
+		this.setLayout(null);
+		this.setVisible(true);
+
+		// Initialize window
+		loginFrame = new JFrame("Log In: ");
+		loginFrame.setLocation(new Point(300, 300));
+		loginFrame.setSize(new Dimension(400, 200));
+		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		loginFrame.add(this);
+
+		// Email label and Email Entry Box
+		login_userLabel = new JLabel("Email:");
+		login_userLabel.setBounds(100, 8, 70, 20);
+		this.add(login_userLabel);
+		login_userTextField = new JTextField();
+		login_userTextField.setBounds(100, 27, 193, 28);
+		this.add(login_userTextField);
+
+
+		// Password Label and Password entry box
+		login_passLabel = new JLabel("Password:");
+		login_passLabel.setBounds(100, 55, 70, 20);
+		this.add(login_passLabel);
+		login_passTextField = new JPasswordField();
+		login_passTextField.setBounds(100, 75, 193, 28);
+		this.add(login_passTextField);
+
+		// "Log In" Button
+		loginButton = new JButton("Log In");
+		loginButton.setBounds(100,110,70,25);
+		loginButton.setForeground(Color.WHITE);
+		loginButton.setBackground(Color.BLACK);
+		loginButton.setFont(new Font("Arial", Font.BOLD, 10));
+		this.add(loginButton);
 		
-			login_userTextField = new JTextField();
-			login_userTextField.setBounds(100, 27, 193, 28);
-			this.add(login_userTextField);
-			
-			login_passLabel = new JLabel("Password:");
-			login_passLabel.setBounds(100, 55, 70, 20);
-			this.add(login_passLabel);
-			
-			login_passTextField = new JPasswordField();
-			login_passTextField.setBounds(100, 75, 193, 28);
-			this.add(login_passTextField);
-			
-			loginButton = new JButton("Log In");
-			loginButton.setBounds(100,110,70,25);
-	        loginButton.setForeground(Color.WHITE);
-	        loginButton.setBackground(Color.BLACK);
-	        loginButton.setFont(new Font("Arial", Font.BOLD, 10));
-	        this.add(loginButton);
-	        
+		// "Register" Button (for creating new user)
 	        registerButton = new JButton("Register");
 	        registerButton.setBounds(200, 110, 90, 25);
 	        registerButton.setForeground(Color.WHITE);
@@ -56,7 +60,12 @@ public class Login_View extends JPanel{
 	        
 	        loginFrame.setVisible(true);
 	}
-
+	/*
+	 * Getters and Setters
+	 * |   |   |   |   |
+	 * V   V   V   V   V
+	 */
+	
 	public JFrame getLoginFrame() {
 		return loginFrame;
 	}
