@@ -118,7 +118,13 @@ public class UserReg_View extends JPanel{
         back_to_login.setFont(new Font("Times New Roman", Font.BOLD, 10));
         this.add(back_to_login);
 	}
-
+	
+	/*
+	 * Getters and Setters
+	 * |   |   |   |   |
+	 * V   V   V   V   V
+	 */
+	
 	public JFrame getReg_Frame() {
 		return reg_Frame;
 	}
