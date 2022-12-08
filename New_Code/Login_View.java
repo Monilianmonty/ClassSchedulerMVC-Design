@@ -9,7 +9,7 @@ public class Login_View extends JPanel{
 	private JLabel login_userLabel;
 	private JLabel login_passLabel;
 	private JTextField login_userTextField;
-	private JTextField login_passTextField;
+	private JPasswordField login_passTextField;
 	private JButton loginButton;
 	private JButton registerButton;
 	
@@ -19,7 +19,6 @@ public class Login_View extends JPanel{
 			this.setVisible(true);
 			
 			loginFrame = new JFrame("Log In: ");
-			loginFrame.setVisible(true);
 			loginFrame.setLocation(new Point(300, 300));
 			loginFrame.setSize(new Dimension(400, 200));
 			loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +36,7 @@ public class Login_View extends JPanel{
 			login_passLabel.setBounds(100, 55, 70, 20);
 			this.add(login_passLabel);
 			
-			login_passTextField = new JTextField();
+			login_passTextField = new JPasswordField();
 			login_passTextField.setBounds(100, 75, 193, 28);
 			this.add(login_passTextField);
 			
@@ -54,6 +53,8 @@ public class Login_View extends JPanel{
 	        registerButton.setBackground(Color.BLACK);
 	        registerButton.setFont(new Font("Arial", Font.BOLD, 10));
 	        this.add(registerButton);
+	        
+	        loginFrame.setVisible(true);
 	}
 
 	public JFrame getLoginFrame() {
@@ -88,11 +89,11 @@ public class Login_View extends JPanel{
 		this.login_userTextField = login_userTextField;
 	}
 
-	public JTextField getPassTextField() {
+	public JPasswordField getPassTextField() {
 		return login_passTextField;
 	}
 
-	public void setPassTextField(JTextField login_passTextField) {
+	public void setPassTextField(JPasswordField login_passTextField) {
 		this.login_passTextField = login_passTextField;
 	}
 
