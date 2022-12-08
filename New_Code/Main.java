@@ -23,7 +23,8 @@ public class Main {
 	public static void main(String args[]) {
 		Login_View logView = new Login_View();
 		UserReg_View regView = new UserReg_View();
-		controller control = new controller(logView, regView);
+		ClassPage_View classView = new ClassPage_View();
+        	controller control = new controller(logView, regView, classView);
 		
 		control.initController();
 
