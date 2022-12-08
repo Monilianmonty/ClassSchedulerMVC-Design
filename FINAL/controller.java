@@ -43,6 +43,7 @@ public class controller {
                 String email = student1.getEmail();
                 String pass = student1.getPassword();
 
+
                 if(username.equals(email) && password.equals(pass)) {
                     JOptionPane.showMessageDialog(null, "Log In Successful");
                     Cview.classFrame.setVisible(true);
@@ -77,33 +78,35 @@ public class controller {
     }
 
     public void submit_reg() {
-        boolean validEntry = false;
-        try(FileInputStream studentIN = new FileInputStream("StudentData.txt");
-            ObjectInputStream obIN = new ObjectInputStream(studentIN)){
-            if(!Rview.getReg_userTextField().getText().contains("@") ||
+        boolean validEntry = true;
+        try (FileInputStream studentIN = new FileInputStream("StudentData.txt");
+             ObjectInputStream obIN = new ObjectInputStream(studentIN)) {
+            if (!Rview.getReg_userTextField().getText().contains("@") ||
                     !Rview.getReg_userTextField().getText().contains(".")) {
                 JOptionPane.showMessageDialog(null, "Please enter valid email address");
-            }else {
-                while(studentIN.available() > 0) {
+            } else {
+                while (studentIN.available() > 0) {
                     Student val_student = (Student) obIN.readObject();
+                    String uid = val_student.getId();
+                    String uem = val_student.getEmail();
 
-                    if(Rview.getReg_nameTextField().getText().equals("")) {
+
+                    if (Rview.getReg_nameTextField().getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "PLease enter your Name");
-                    }else if(Rview.getReg_idTextField().getText().equals("")) {
+                    } else if (Rview.getReg_idTextField().getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "PLease enter your ID");
-                    }else if(Rview.getReg_idTextField().getText().equals("")) {
+                    } else if (Rview.getReg_idTextField().getText().equals(uid)) {
                         JOptionPane.showMessageDialog(null, "ID already taken");
-                    }else if(Rview.getReg_userTextField().getText().equals("")) {
+                        validEntry = false;
+                    } else if (Rview.getReg_userTextField().getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "PLease enter your Email");
-                    }else if(Rview.getReg_userTextField().getText().equals("")) {
+                    } else if (Rview.getReg_userTextField().getText().equals(uem)) {
                         JOptionPane.showMessageDialog(null, "Email already taken");
-                    }else if(Rview.getReg_passTextField().getText().equals("")) {
+                        validEntry = false;
+                    } else if (Rview.getReg_passTextField().getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "PLease enter your Password");
-                    }else if(Rview.getReg_passTextField().getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Password already taken");
-                    }else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Registration Complete!");
-                        validEntry = true;
                         Lview.getLoginFrame().setVisible(true);
                         Rview.reg_Frame.dispose();
                         break;
@@ -112,32 +115,34 @@ public class controller {
             }
             obIN.close();
             studentIN.close();
-        }catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
-        }catch(IOException ex) {
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
-        }catch(ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         }
 
-        try(FileOutputStream studentOUT = new FileOutputStream("StudentData.txt");
-            ObjectOutputStream obOUT = new ObjectOutputStream(studentOUT)){
+        //if the entry is not valid it will not write to file
+        if (validEntry) {
+            try (FileOutputStream studentOUT = new FileOutputStream("StudentData.txt");
+                 ObjectOutputStream obOUT = new ObjectOutputStream(studentOUT)) {
 
-            Student newStudent = new Student();
-            newStudent.setName(Rview.getReg_nameTextField().getText());
-            newStudent.setId(Rview.getReg_idTextField().getText());
-            newStudent.setEmail(Rview.getReg_userTextField().getText());
-            newStudent.setPassword(Rview.getReg_passTextField().getText());
+                Student newStudent = new Student();
+                newStudent.setName(Rview.getReg_nameTextField().getText());
+                newStudent.setId(Rview.getReg_idTextField().getText());
+                newStudent.setEmail(Rview.getReg_userTextField().getText());
+                newStudent.setPassword(Rview.getReg_passTextField().getText());
 
-            obOUT.writeObject(newStudent);
+                obOUT.writeObject(newStudent);
 
-        }catch(FileNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }catch(IOException ex) {
-            throw new RuntimeException(ex);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
-
 
 
     public void reset_reg() {
