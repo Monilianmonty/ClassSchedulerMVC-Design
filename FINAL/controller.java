@@ -84,6 +84,7 @@ public class controller {
             if (!Rview.getReg_userTextField().getText().contains("@") ||
                     !Rview.getReg_userTextField().getText().contains(".")) {
                 JOptionPane.showMessageDialog(null, "Please enter valid email address");
+                validEntry = false;
             } else {
                 while (studentIN.available() > 0) {
                     Student val_student = (Student) obIN.readObject();
