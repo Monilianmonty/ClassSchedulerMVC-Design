@@ -104,7 +104,7 @@ public class controller {
                     }else {
                         JOptionPane.showMessageDialog(null, "Registration Complete!");
                         validEntry = true;
-                        Lview = new Login_View();
+                        Lview.getLoginFrame().setVisible(true);
                         Rview.reg_Frame.dispose();
                         break;
                     }
@@ -149,7 +149,7 @@ public class controller {
     }
 
     public void back() {
-        Lview = new Login_View();
+        Lview.getLoginFrame().setVisible(true);
         Rview.reg_Frame.dispose();
     }
 
