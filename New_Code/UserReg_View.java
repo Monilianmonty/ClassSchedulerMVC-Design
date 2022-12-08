@@ -23,6 +23,7 @@ public class UserReg_View extends JPanel{
 	private JTextField reg_passTextField;
 	private JButton reg_submit;
 	private JButton reg_reset;
+	private JButton back_to_login;
 	
 	public UserReg_View() {
 		
@@ -108,6 +109,14 @@ public class UserReg_View extends JPanel{
         reg_reset.setBackground(Color.BLACK);
         reg_reset.setFont(new Font("Times New Roman", Font.BOLD,10));
         this.add(reg_reset);
+        
+        //Back to Login
+        back_to_login = new JButton("Back");
+        back_to_login.setBounds(180, 290, 100, 25);
+        back_to_login.setForeground(Color.WHITE);
+        back_to_login.setBackground(Color.BLACK);
+        back_to_login.setFont(new Font("Times New Roman", Font.BOLD, 10));
+        this.add(back_to_login);
 	}
 
 	public JFrame getReg_Frame() {
@@ -196,5 +205,13 @@ public class UserReg_View extends JPanel{
 
 	public void setReg_reset(JButton reg_reset) {
 		this.reg_reset = reg_reset;
+	}
+
+	public JButton getBack_to_login() {
+		return back_to_login;
+	}
+
+	public void setBack_to_login(JButton back_to_login) {
+		this.back_to_login = back_to_login;
 	}
 }
