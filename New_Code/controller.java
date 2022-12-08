@@ -38,6 +38,7 @@ public class controller {
 				
 				if(username.equals(email) && password.equals(pass)) {
 					JOptionPane.showMessageDialog(null, "Log In Successful");
+					Cview.classFrame.setVisible(true);
 					break;
 				}else{
 				JOptionPane.showMessageDialog(null, "Username or Password mismatch");
@@ -134,4 +135,54 @@ public class controller {
 		Lview = new Login_View();
 		Rview.reg_Frame.dispose();
 	}
+	public void dispJOP(String message) {
+        JFrame f = new JFrame("Warning");
+        JOptionPane.showMessageDialog(f, message);
+    }
+    public void addClass() {
+        if (Cview.getClass_addClassOptions().getSelectedIndex() == -1) {
+            this.dispJOP("You can't add any more classes!");
+        }
+        else {
+            Class pickedClass = (Class) Cview.getClass_addClassOptions().getSelectedItem();
+            Object[][] data = Cview.getClass_selectedClassesTableData();
+            JTable table = Cview.getClass_selectedClassesTable();
+            JComboBox add = Cview.getClass_addClassOptions();
+            JComboBox remove = Cview.getClass_removeClassOptions();
+            for (int i = 1; i < 27; i++) {
+                if (data[i][0].equals(pickedClass.intToTimeSlot(pickedClass.getStart(), pickedClass.getEnd())) && data[i][1] == null) {
+                    for (int j = 0; j < 5; j++) {
+                        if (pickedClass.getDays()[j]) {
+                            table.setValueAt(pickedClass.getName(),i,j+1);
+                            table.setValueAt(pickedClass.getTitle(),i+1,j+1);
+                        }
+                    }
+                    remove.addItem(pickedClass);
+                    add.removeItemAt(add.getSelectedIndex());
+                }
+                else if (data[i][1] != null && data[i][0].equals(pickedClass.intToTimeSlot(pickedClass.getStart(), pickedClass.getEnd()))) {
+                    this.dispJOP("That time slot is reserved for another class. Remove the class in this slot to add your current selected one.");
+                }
+            }
+        }
+    }
+    public void removeClass() {
+        Class pickedClass = (Class) Cview.getClass_removeClassOptions().getSelectedItem();
+        Object[][] data = Cview.getClass_selectedClassesTableData();
+        JTable table = Cview.getClass_selectedClassesTable();
+        JComboBox add = Cview.getClass_addClassOptions();
+        JComboBox remove = Cview.getClass_removeClassOptions();
+        for (int i = 1; i < 27; i++) {
+            if (data[i][0].equals(pickedClass.intToTimeSlot(pickedClass.getStart(),pickedClass.getEnd())) && data[i][1] != null) {
+                for (int j = 0; j < 5; j++) {
+                    if (pickedClass.getDays()[j]) {
+                        table.setValueAt(null,i,j+1);
+                        table.setValueAt(null,i+1,j+1);
+                    }
+                }
+            }
+        }
+        add.addItem(remove.getSelectedItem());
+        remove.removeItemAt(remove.getSelectedIndex());
+    }
 }
