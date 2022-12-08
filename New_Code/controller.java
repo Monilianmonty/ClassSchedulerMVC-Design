@@ -7,9 +7,11 @@ import javax.swing.*;
 public class controller {
 	private Login_View Lview;
 	private UserReg_View Rview;
-	public controller(Login_View v1, UserReg_View v2) {
+	private ClassPage_View Cview;
+	public controller(Login_View v1, UserReg_View v2, ClassPage_View v3) {
 		Lview = v1;
 		Rview = v2;
+		Cview = v3;
 	}
 	
 	public void initView() {
@@ -21,6 +23,8 @@ public class controller {
 		Lview.getRegisterButton().addActionListener(e -> register());
 		Rview.getReg_submit().addActionListener(e -> submit_reg());
 		Rview.getReg_reset().addActionListener(e -> reset_reg());
+		Cview.getClass_addClassButton().addActionListener(e -> addClass());
+        	Cview.getClass_removeClassButton().addActionListener(e -> removeClass());
 		Rview.getBack_to_login().addActionListener(e -> back());
 	}
 	
