@@ -132,10 +132,26 @@ public class ClassPageInterface extends JFrame{
             selectedClassesTable.getColumnModel().getColumn(i).setPreferredWidth(200);
             selectedClassesTable.getColumnModel().getColumn(i).setCellRenderer( renderer );
         }
+
+        JButton logout = new JButton("Log Out");
+        contentPane.add(logout);
+        layout.putConstraint(SpringLayout.SOUTH, logout,-5, SpringLayout.SOUTH, contentPane);
+        layout.putConstraint(SpringLayout.EAST, logout, -5, SpringLayout.EAST, contentPane);
+        logout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                //window.dispose();
+                window.dispose();
+                LogInPageInterface.drawLog();
+
+            }
+        });
+
         //allows "Remove Class" button to do stuff
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 //adds course back to the "Add Class" dropdown
                 Class pickedClass = (Class) removeClassOptions.getSelectedItem();
                 for (int i = 1; i < 27; i++) {
@@ -151,6 +167,7 @@ public class ClassPageInterface extends JFrame{
                 addClassOptions.addItem(removeClassOptions.getSelectedItem());
                 removeClassOptions.removeItemAt(removeClassOptions.getSelectedIndex());
             }
+
         });
         window.setVisible(true);
         window.setBounds(400,150,1280,720);
