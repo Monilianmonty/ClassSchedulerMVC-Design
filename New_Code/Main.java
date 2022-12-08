@@ -8,19 +8,15 @@ import javax.swing.*;
  * In Models:
  * 	- Student
  * 	- Course
- * 	- loginPage
- * 	- UserReg
- * 	- CoursePage
- * 
- * In View:
+ * In Views:
+ *	- Login Page, user Registration View, Main Page View 
  * 	- create all JFrame elements
- * 	- getters/setters to each element
  * 	- add elements to frame
- * 
+ * 	- getters/setters to each element
  * Controller 
  * 	- contains references to (instances of) model and view 
  * 	- initController method to add actionListeners to GUI components
- * 	- use .addActionListener(e -> *actionFunction*) and put actionFunction(){<code>} later
+ * 	- add functionality to GUI elements
  */
 
 public class Main {
